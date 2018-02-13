@@ -121,6 +121,8 @@ public:
 	int		m_iJuice;
 	int		m_iOn;			// 0 = off, 1 = startup, 2 = going
 	float   m_flSoundTime;
+	char	*m_szTarget;
+	BOOL	m_bTriggerable;
 };
 
 TYPEDESCRIPTION CWallHealth::m_SaveData[] =
@@ -130,9 +132,10 @@ TYPEDESCRIPTION CWallHealth::m_SaveData[] =
 	DEFINE_FIELD( CWallHealth, m_iJuice, FIELD_INTEGER),
 	DEFINE_FIELD( CWallHealth, m_iOn, FIELD_INTEGER),
 	DEFINE_FIELD( CWallHealth, m_flSoundTime, FIELD_TIME),
+	DEFINE_FIELD(CWallHealth, m_bTriggerable, FIELD_BOOLEAN)
 };
 
-IMPLEMENT_SAVERESTORE( CWallHealth, CBaseEntity );
+IMPLEMENT_SAVERESTORE(CWallHealth, CBaseEntity);
 
 LINK_ENTITY_TO_CLASS(func_healthcharger, CWallHealth);
 
@@ -152,6 +155,12 @@ void CWallHealth::KeyValue( KeyValueData *pkvd )
 		m_iReactivate = atoi(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 	}
+	else if (FStrEq(pkvd->szKeyName, "target"))
+	{
+		ALERT(at_console, "Healthcharger: has target = %s\n", pkvd->szValue);
+		strcpy(m_szTarget, pkvd->szValue);
+		pkvd->fHandled = TRUE;
+	}
 	else
 		CBaseToggle::KeyValue( pkvd );
 }
@@ -167,7 +176,8 @@ void CWallHealth::Spawn()
 	UTIL_SetSize(pev, pev->mins, pev->maxs);
 	SET_MODEL(ENT(pev), STRING(pev->model) );
 	m_iJuice = gSkillData.healthchargerCapacity;
-	pev->frame = 0;			
+	m_bTriggerable = TRUE;
+	pev->frame = 0;
 
 }
 
@@ -191,7 +201,12 @@ void CWallHealth::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE u
 	// if there is no juice left, turn it off
 	if (m_iJuice <= 0)
 	{
-		pev->frame = 1;			
+		if (m_bTriggerable)
+		{
+			FireTargets(STRING(pev->target), pActivator, this, USE_TOGGLE, 0);
+			m_bTriggerable = FALSE;
+		}
+		pev->frame = 1;
 		Off();
 	}
 
@@ -242,8 +257,9 @@ void CWallHealth::Recharge(void)
 {
 		EMIT_SOUND(ENT(pev), CHAN_ITEM, "items/medshot4.wav", 1.0, ATTN_NORM );
 	m_iJuice = gSkillData.healthchargerCapacity;
-	pev->frame = 0;			
-	SetThink( &CWallHealth::SUB_DoNothing );
+	m_bTriggerable = TRUE;
+	pev->frame = 0;
+	SetThink(&CWallHealth::SUB_DoNothing);
 }
 
 void CWallHealth::Off(void)
