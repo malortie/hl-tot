@@ -171,7 +171,7 @@ void CWallHealth::Spawn()
 	m_iJuice = gSkillData.healthchargerCapacity;
 	pev->frame = 0;			
 
-	m_bTriggerable = !FStringNull(pev->target);
+	m_bTriggerable = TRUE;
 }
 
 void CWallHealth::Precache()
@@ -195,7 +195,7 @@ void CWallHealth::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE u
 	if (m_iJuice <= 0)
 	{
 		pev->frame = 1;			
-		if (m_bTriggerable)
+		if (m_bTriggerable && !FStringNull(pev->target))
 		{
 			FireTargets(STRING(pev->target), pActivator, this, USE_TOGGLE, 0);
 			m_bTriggerable = FALSE;

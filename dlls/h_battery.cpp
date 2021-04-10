@@ -96,7 +96,7 @@ void CRecharge::Spawn()
 	SET_MODEL(ENT(pev), STRING(pev->model) );
 	m_iJuice = gSkillData.suitchargerCapacity;
 	pev->frame = 0;			
-	m_bTriggerable = !FStringNull(pev->target);
+	m_bTriggerable = TRUE;
 }
 
 void CRecharge::Precache()
@@ -117,7 +117,7 @@ void CRecharge::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE use
 	if (m_iJuice <= 0)
 	{
 		pev->frame = 1;			
-		if (m_bTriggerable)
+		if (m_bTriggerable && !FStringNull(pev->target))
 		{
 			FireTargets(STRING(pev->target), pActivator, this, USE_TOGGLE, 0);
 			m_bTriggerable = FALSE;
