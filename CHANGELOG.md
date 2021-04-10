@@ -17,6 +17,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Reworked health and suit chargers target code
 
+### Removed
+
+- Hardcoded Python reload sound
+
 ## [tot/1.0.1] - 2018-02-13
 
 ### Fixed
