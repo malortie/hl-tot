@@ -387,7 +387,6 @@ void CCineMonster :: PossessEntity( void )
 			}
 		}
 
-#if defined ( TOT_DLL )
 		//
 		// Fix a bug where barney would not run to the osprey on map 7.
 		//
@@ -413,7 +412,6 @@ void CCineMonster :: PossessEntity( void )
 				}
 			}
 		}
-#endif // TOT_DLL
 	}
 }
 

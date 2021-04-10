@@ -17,7 +17,6 @@
 #define SCIENTIST_H
 
 
-#if defined ( TOT_DLL )
 #define		NUM_SCIENTIST_HEADS		4 // four heads available for scientist model
 enum { HEAD_GLASSES = 0, HEAD_EINSTEIN = 1, HEAD_LUTHER = 2, HEAD_SLICK = 3 };
 
@@ -88,6 +87,5 @@ public:
 	int	m_iPose;// which sequence to display
 	static char *m_szPoses[7];
 };
-#endif // defined ( TOT_DLL )
 
 #endif // SCIENTIST_H

@@ -555,14 +555,12 @@ public:
 #endif
 	}
 
-#if defined ( TOT_DLL ) || defined ( TOT_CLIENT_DLL )
 #ifndef CLIENT_DLL
 	int		Save(CSave &save);
 	int		Restore(CRestore &restore);
 	static	TYPEDESCRIPTION m_SaveData[];
 #endif
 	float m_flSoundDelay;
-#endif
 
 private:
 	unsigned short m_usFirePython;

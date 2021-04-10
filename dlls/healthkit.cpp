@@ -121,9 +121,7 @@ public:
 	int		m_iJuice;
 	int		m_iOn;			// 0 = off, 1 = startup, 2 = going
 	float   m_flSoundTime;
-#if defined ( TOT_DLL )
 	BOOL	m_bTriggerable;
-#endif
 };
 
 TYPEDESCRIPTION CWallHealth::m_SaveData[] =
@@ -133,9 +131,7 @@ TYPEDESCRIPTION CWallHealth::m_SaveData[] =
 	DEFINE_FIELD( CWallHealth, m_iJuice, FIELD_INTEGER),
 	DEFINE_FIELD( CWallHealth, m_iOn, FIELD_INTEGER),
 	DEFINE_FIELD( CWallHealth, m_flSoundTime, FIELD_TIME),
-#if defined ( TOT_DLL )
 	DEFINE_FIELD( CWallHealth, m_bTriggerable, FIELD_BOOLEAN ),
-#endif
 };
 
 IMPLEMENT_SAVERESTORE( CWallHealth, CBaseEntity );
@@ -175,9 +171,7 @@ void CWallHealth::Spawn()
 	m_iJuice = gSkillData.healthchargerCapacity;
 	pev->frame = 0;			
 
-#if defined ( TOT_DLL )
 	m_bTriggerable = !FStringNull(pev->target);
-#endif
 }
 
 void CWallHealth::Precache()
@@ -201,13 +195,11 @@ void CWallHealth::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE u
 	if (m_iJuice <= 0)
 	{
 		pev->frame = 1;			
-#if defined ( TOT_DLL )
 		if (m_bTriggerable)
 		{
 			FireTargets(STRING(pev->target), pActivator, this, USE_TOGGLE, 0);
 			m_bTriggerable = FALSE;
 		}
-#endif
 		Off();
 	}
 
@@ -258,9 +250,7 @@ void CWallHealth::Recharge(void)
 {
 		EMIT_SOUND(ENT(pev), CHAN_ITEM, "items/medshot4.wav", 1.0, ATTN_NORM );
 	m_iJuice = gSkillData.healthchargerCapacity;
-#if defined ( TOT_DLL )
 	m_bTriggerable = !FStringNull(pev->target);
-#endif
 	pev->frame = 0;			
 	SetThink( &CWallHealth::SUB_DoNothing );
 }
