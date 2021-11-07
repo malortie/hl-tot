@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [tot/1.0.2] - 2021-04-10
+## [1.0.2] - 2021-11-07
 
 ### Added
 
@@ -21,13 +21,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Hardcoded Python reload sound
 
-## [tot/1.0.1] - 2018-02-13
+## [1.0.1] - 2018-02-13
 
 ### Fixed
 
 - Fix missing option to fire target when health and suit chargers are empty
 
-## [tot/1.0.0] - 2015-12-03
+## [1.0.0] - 2015-12-03
 
 ### Added
 
